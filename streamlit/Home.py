@@ -703,7 +703,7 @@ def drawDashboard():
             </div>
             """, unsafe_allow_html=True)
             
-       with soil_cols[1]:
+        with soil_cols[1]:
             st.markdown(f"""
             <div style="padding: 1rem; border-radius: 0.5rem; border: 1px solid #ddd; background-color: {'#f8f9fa' if not st.session_state.DarkMode else '#1e1e1e'}">
                 <h3>Recommendation:</h3>
