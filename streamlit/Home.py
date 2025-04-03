@@ -11,10 +11,6 @@ apiKey = "a97a55bb0925ad628f6d2c4d7664f4b0919e198e2720504d2c02901dc7387408"
 st.set_page_config(page_title="Agriculture Dashboard", layout="wide")
 st_autorefresh(interval=10000, limit=None, key="auto-refresh-handler")
 
-humidityData = pd.DataFrame()
-temperatureData = pd.DataFrame()
-moistureData = pd.DataFrame()
-
 st.title("Smart Agriculture Dashboard")
 st.subheader("Real-time Monitoring and Crop Recommendations")
 
@@ -22,11 +18,19 @@ st.subheader("Real-time Monitoring and Crop Recommendations")
 location = st.selectbox("Select your location", ["North India", "South India", "West India", "East India"])
 season = st.selectbox("Select the current season", ["Summer", "Monsoon", "Winter"])
 
-# Fetch live data
+# Fetch live data with error handling
 anedya_config(nodeId, apiKey)
-humidityData = fetchHumidityData()
-temperatureData = fetchTemperatureData()
-moistureData = fetchMoistureData()
+
+def safe_fetch(fetch_function, name):
+    try:
+        return fetch_function()
+    except Exception as e:
+        st.error(f"Error fetching {name} data: {e}")
+        return pd.DataFrame()
+
+humidityData = safe_fetch(fetchHumidityData, "humidity")
+temperatureData = safe_fetch(fetchTemperatureData, "temperature")
+moistureData = safe_fetch(fetchMoistureData, "moisture")
 
 # Display live sensor data
 st.subheader("Current Sensor Data")
