@@ -2,11 +2,12 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from streamlit_autorefresh import st_autorefresh
+import geocoder
 
 from utils.anedya import anedya_config, fetchHumidityData, fetchTemperatureData, fetchMoistureData
 
-nodeId = "0195e651-cc0c-731f-96d3-4e89384d3924"
-apiKey = "1eed2864228e1537395bd082cb098f5d29f6d00610d0bb60520a49f3878f1dce"
+nodeId = "157743b8-3975-11ef-9ecc-a1461caa74a3"
+apiKey = "a97a55bb0925ad628f6d2c4d7664f4b0919e198e2720504d2c02901dc7387408"
 
 st.set_page_config(page_title="Agriculture Dashboard", layout="wide")
 st_autorefresh(interval=10000, limit=None, key="auto-refresh-handler")
@@ -14,19 +15,28 @@ st_autorefresh(interval=10000, limit=None, key="auto-refresh-handler")
 st.title("Smart Agriculture Dashboard")
 st.subheader("Real-time Monitoring and Crop Recommendations")
 
-# User Inputs
-location = st.selectbox("Select your location", ["North India", "South India", "West India", "East India"])
-season = st.selectbox("Select the current season", ["Summer", "Monsoon", "Winter"])
+# Fetch user's approximate location dynamically
+def get_user_location():
+    g = geocoder.ip('me')
+    return g.city if g.city else "Unknown"
+
+user_location = get_user_location()
+st.write(f"Detected Location: {user_location}")
+
+location = st.selectbox("Select your location", ["North India", "South India", "West India", "East India"], index=0)
+season = st.selectbox("Select the current season", ["Summer", "Monsoon", "Winter"], index=0)
 
 # Fetch live data with error handling
 anedya_config(nodeId, apiKey)
 
 def safe_fetch(fetch_function, name):
     try:
-        return fetch_function()
+        data = fetch_function()
+        if not data.empty:
+            return data
     except Exception as e:
         st.error(f"Error fetching {name} data: {e}")
-        return pd.DataFrame()
+    return pd.DataFrame()
 
 humidityData = safe_fetch(fetchHumidityData, "humidity")
 temperatureData = safe_fetch(fetchTemperatureData, "temperature")
@@ -54,18 +64,11 @@ def get_nutrient_suggestions(moistureData, temperatureData):
     if moistureData.empty or temperatureData.empty:
         return "No data available for analysis."
     
-    moisture_level = moistureData.iloc[-1]['value']
-    temperature_level = temperatureData.iloc[-1]['value']
+    moisture_level = moistureData.iloc[-1]['value'] if not moistureData.empty else None
+    temperature_level = temperatureData.iloc[-1]['value'] if not temperatureData.empty else None
     
-    if moisture_level < 30:
-        moisture_status = "Low moisture detected. Add organic matter and mulching."
-    else:
-        moisture_status = "Moisture levels are adequate."
-    
-    if temperature_level > 35:
-        temperature_status = "High temperature detected. Consider shade nets or irrigation."
-    else:
-        temperature_status = "Temperature is within optimal range."
+    moisture_status = "Low moisture detected. Add organic matter and mulching." if moisture_level and moisture_level < 30 else "Moisture levels are adequate."
+    temperature_status = "High temperature detected. Consider shade nets or irrigation." if temperature_level and temperature_level > 35 else "Temperature is within optimal range."
     
     return f"{moisture_status} {temperature_status}"
 
