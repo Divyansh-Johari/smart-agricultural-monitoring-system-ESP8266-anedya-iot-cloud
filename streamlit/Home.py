@@ -160,7 +160,7 @@ def get_location():
 @st.cache_data(ttl=3600)
 def get_weather(lat, lon):
     try:
-        api_key = "YOUR_OPENWEATHERMAP_API_KEY"  # Replace with your actual API key
+        api_key = "2a40bf8099e8fb97f8059d34de4f2868"  # Replace with your actual API key
         url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric"
         response = requests.get(url)
         data = response.json()
@@ -346,7 +346,7 @@ def drawLogin():
         pass
     with cols[1]:
         st.title("Smart Agriculture Dashboard", anchor=False)
-        st.image("https://i.imgur.com/IJ9QmLX.png", width=150)  # Replace with your own logo
+        st.image("https://iotdesignpro.com/sites/default/files/main-image/Smart-farming-IoT-application-%20in-Agriculture.jpg", width=150)  # Replace with your own logo
         
         with st.form("login_form"):
             username_inp = st.text_input("Username")
@@ -373,7 +373,7 @@ def drawDashboard():
         st.subheader("User Profile")
         col1, col2 = st.columns([1, 3])
         with col1:
-            st.image("https://i.imgur.com/X6OYLsV.png", width=50)  # Placeholder user avatar
+            st.image("https://iotdesignpro.com/sites/default/files/main-image/Smart-farming-IoT-application-%20in-Agriculture.jpg", width=50)  # Placeholder user avatar
         with col2:
             st.write("Welcome, Admin")
             st.write("Farm: Demo Farm")
