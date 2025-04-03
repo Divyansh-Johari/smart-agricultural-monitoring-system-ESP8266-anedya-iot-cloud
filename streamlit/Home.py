@@ -5,8 +5,8 @@ from streamlit_autorefresh import st_autorefresh
 
 from utils.anedya import anedya_config, fetchHumidityData, fetchTemperatureData, fetchMoistureData
 
-nodeId = "157743b8-3975-11ef-9ecc-a1461caa74a3"
-apiKey = "a97a55bb0925ad628f6d2c4d7664f4b0919e198e2720504d2c02901dc7387408"
+nodeId = "0195e651-cc0c-731f-96d3-4e89384d3924"
+apiKey = "1eed2864228e1537395bd082cb098f5d29f6d00610d0bb60520a49f3878f1dce"
 
 st.set_page_config(page_title="Agriculture Dashboard", layout="wide")
 st_autorefresh(interval=10000, limit=None, key="auto-refresh-handler")
