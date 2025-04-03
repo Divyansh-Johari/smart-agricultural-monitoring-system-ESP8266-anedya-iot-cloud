@@ -34,7 +34,7 @@ def load_crop_data():
         "rice": {
             "temp_range": [20, 35],
             "humidity_range": [70, 90],
-            "moisture_range": [700, 1000],
+            "moisture_range": [700, 2000],
             "nutrients": {
                 "nitrogen": "High (100-120 kg/ha)",
                 "phosphorus": "Medium (50-60 kg/ha)",
@@ -46,7 +46,7 @@ def load_crop_data():
         "wheat": {
             "temp_range": [15, 25],
             "humidity_range": [50, 70],
-            "moisture_range": [450, 650],
+            "moisture_range": [450, 1050],
             "nutrients": {
                 "nitrogen": "Medium (80-100 kg/ha)",
                 "phosphorus": "Medium (40-50 kg/ha)",
@@ -82,7 +82,7 @@ def load_crop_data():
         "sugarcane": {
             "temp_range": [24, 38],
             "humidity_range": [60, 80],
-            "moisture_range": [650, 1000],
+            "moisture_range": [650, 1200],
             "nutrients": {
                 "nitrogen": "High (150-200 kg/ha)",
                 "phosphorus": "Medium (60-80 kg/ha)",
