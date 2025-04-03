@@ -143,15 +143,7 @@ def get_location():
         "country": "IN",
         "loc": "26.9124,75.7873"  # Jaipur coordinates
     }
-    except Exception as e:
-        st.error(f"Error fetching location: {e}")
-        return {
-            "ip": "Unknown",
-            "city": "Unknown",
-            "region": "Unknown",
-            "country": "Unknown",
-            "loc": "0,0"
-        }
+   
 
 # Get weather data
 @st.cache_data(ttl=3600)
