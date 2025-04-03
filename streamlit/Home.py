@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from streamlit_autorefresh import st_autorefresh
-import geocoder
+import requests
 
 from utils.anedya import anedya_config, fetchHumidityData, fetchTemperatureData, fetchMoistureData
 
@@ -17,8 +17,11 @@ st.subheader("Real-time Monitoring and Crop Recommendations")
 
 # Fetch user's approximate location dynamically
 def get_user_location():
-    g = geocoder.ip('me')
-    return g.city if g.city else "Unknown"
+    try:
+        response = requests.get("https://ipinfo.io/json").json()
+        return response.get("city", "Unknown")
+    except Exception:
+        return "Unknown"
 
 user_location = get_user_location()
 st.write(f"Detected Location: {user_location}")
