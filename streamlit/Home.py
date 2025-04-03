@@ -136,16 +136,13 @@ def load_regional_crop_data():
 # Get user's location from IP
 @st.cache_data(ttl=3600)
 def get_location():
-    try:
-        response = requests.get("https://ipinfo.io/json")
-        data = response.json()
-        return {
-            "ip": data.get("ip", "Unknown"),
-            "city": data.get("city", "Unknown"),
-            "region": data.get("region", "Unknown"),
-            "country": data.get("country", "Unknown"),
-            "loc": data.get("loc", "0,0")
-        }
+    return {
+        "ip": "N/A",
+        "city": "Jaipur",
+        "region": "Rajasthan",
+        "country": "IN",
+        "loc": "26.9124,75.7873"  # Jaipur coordinates
+    }
     except Exception as e:
         st.error(f"Error fetching location: {e}")
         return {
