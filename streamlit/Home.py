@@ -346,7 +346,7 @@ def drawLogin():
         pass
     with cols[1]:
         st.title("Smart Agriculture Dashboard", anchor=False)
-        st.image("https://iotdesignpro.com/sites/default/files/main-image/Smart-farming-IoT-application-%20in-Agriculture.jpg", width=150)  # Replace with your own logo
+        st.image("https://iotdesignpro.com/sites/default/files/inline-images/Smart-Greenhouses.jpg", width=150)  # Replace with your own logo
         
         with st.form("login_form"):
             username_inp = st.text_input("Username")
@@ -373,7 +373,7 @@ def drawDashboard():
         st.subheader("User Profile")
         col1, col2 = st.columns([1, 3])
         with col1:
-            st.image("https://iotdesignpro.com/sites/default/files/main-image/Smart-farming-IoT-application-%20in-Agriculture.jpg", width=50)  # Placeholder user avatar
+            st.image("https://iotdesignpro.com/sites/default/files/inline-images/Smart-Greenhouses.jpg", width=50)  # Placeholder user avatar
         with col2:
             st.write("Welcome, Admin")
             st.write("Farm: Demo Farm")
